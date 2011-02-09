@@ -38,7 +38,7 @@ namespace sc2ranks_network
 		std::string data = body(response);
 
 		// parse response data
-		js::variant var = json::parse(data.begin(), data.end());
+		js::variant const var = json::parse(data.begin(), data.end());
 		if (var->type() != typeid(js::object))
 			throw std::exception("parse_data: bad json format");
 
@@ -93,11 +93,11 @@ namespace sc2ranks
 	//			get_base_char("us", "Vevix", 0, 568);
 	map get_base_char(std::string const& region, std::string const& name, int bnetid)
 	{
-		std::string url = boost::str(boost::format("http://sc2ranks.com/api/base/char/%1%/%2%!%3%.json?appKey=%4%") 
+		std::string const url = boost::str(boost::format("http://sc2ranks.com/api/base/char/%1%/%2%!%3%.json?appKey=%4%") 
 							% region % name % bnetid % appKey);
 
 		// Send request and retrieve data
-		js::object obj =  sc2ranks_network::parse_data(url);
+		js::object const obj =  sc2ranks_network::parse_data(url);
 
 		// Check if character exists
 		js::object::const_iterator it = obj.find("error");
@@ -112,11 +112,11 @@ namespace sc2ranks
 	//			get_base_teams("us", "Vevix", 0, 568);
 	map get_base_char_team(std::string const& region, std::string const& name, int bnetid)
 	{
-		std::string url = boost::str(boost::format("http://sc2ranks.com/api/base/teams/%1%/%2%!%3%.json?appKey=%4%") 
+		std::string const url = boost::str(boost::format("http://sc2ranks.com/api/base/teams/%1%/%2%!%3%.json?appKey=%4%") 
 			% region % name % bnetid % appKey);
 
 		// Send request and retrieve data
-		js::object obj = sc2ranks_network::parse_data(url);
+		js::object const obj = sc2ranks_network::parse_data(url);
 
 		// Check if character exists
 		js::object::const_iterator it = obj.find("error");
@@ -129,11 +129,11 @@ namespace sc2ranks
 	// Returns the base character data, and extended team information for the passed bracket.
 	map get_char_team(std::string const& region, std::string const& name, int bnetid, int bracket, bool random = false)
 	{
-		std::string url = boost::str(boost::format("http://sc2ranks.com/api/char/teams/%1%/%2%!%3%/%4%/%5%.json?appKey=%6%") 
+		std::string const url = boost::str(boost::format("http://sc2ranks.com/api/char/teams/%1%/%2%!%3%/%4%/%5%.json?appKey=%6%") 
 			% region % name % bnetid % bracket % random % appKey);
 
 		// Send request and retrieve data
-		js::object obj = sc2ranks_network::parse_data(url);
+		js::object const obj = sc2ranks_network::parse_data(url);
 
 		// Check if character exists
 		js::object::const_iterator it = obj.find("error");
@@ -155,7 +155,6 @@ namespace sc2ranks
 		else
 			throw std::exception("get_char_url: bnetid or code must be supplied");
 	}
-
 }
 
 #endif // SC2RANKS_H
